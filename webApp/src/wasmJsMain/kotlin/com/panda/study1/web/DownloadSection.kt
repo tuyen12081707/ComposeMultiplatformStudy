@@ -37,8 +37,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private const val BASE = "https://github.com/tuyen12081707/ComposeMultiplatformStudy/releases/download/1.0.2"
-
 private data class PlatformInfo(
     val icon: String,
     val label: String,
@@ -49,6 +47,8 @@ private data class PlatformInfo(
     val url: String
 )
 
+private const val BASE_LATEST = "https://github.com/tuyen12081707/ComposeMultiplatformStudy/releases/latest/download"
+
 private val platforms = listOf(
     PlatformInfo(
         icon        = "🍎",
@@ -57,7 +57,8 @@ private val platforms = listOf(
         extension   = ".dmg",
         accentStart = Color(0xFF6366F1),
         accentEnd   = Color(0xFF8B5CF6),
-        url         = "$BASE/XAPK.Installer-1.0.1.dmg"
+        // Tên file tải về sẽ được cố định, không có số version đi kèm
+        url         = "$BASE_LATEST/XAPK-Installer-macOS.dmg"
     ),
     PlatformInfo(
         icon        = "🪟",
@@ -66,7 +67,7 @@ private val platforms = listOf(
         extension   = ".msi",
         accentStart = Color(0xFF0EA5E9),
         accentEnd   = Color(0xFF22D3EE),
-        url         = "$BASE/xapk_installer_window-1.0.1.uu"
+        url         = "$BASE_LATEST/XAPK-Installer-Windows.msi"
     ),
     PlatformInfo(
         icon        = "🐧",
@@ -75,8 +76,8 @@ private val platforms = listOf(
         extension   = ".deb",
         accentStart = Color(0xFFE8541A),
         accentEnd   = Color(0xFFF59E0B),
-        url         = "$BASE/xapk_installer_ubutu-1.0.1.deb"
-    ),
+        url         = "$BASE_LATEST/XAPK-Installer-Ubuntu.deb"
+    )
 )
 
 @Composable
