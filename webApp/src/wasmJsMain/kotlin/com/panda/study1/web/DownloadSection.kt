@@ -66,7 +66,7 @@ private val platforms = listOf(
         extension   = ".msi",
         accentStart = Color(0xFF0EA5E9),
         accentEnd   = Color(0xFF22D3EE),
-        url         = "$BASE/xapk_installer_window.msi"
+        url         = "$BASE/xapk_installer_window.uu"
     ),
     PlatformInfo(
         icon        = "🐧",

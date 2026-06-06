@@ -56,7 +56,7 @@ fun Footer() {
         Spacer(Modifier.height(8.dp))
 
         Text(
-            text      = "© 2025 Ice Bear Studio. All rights reserved.",
+            text      = "© 2026 Ice Bear Studio. All rights reserved.",
             style     = MaterialTheme.typography.bodySmall.copy(
                 color = MaterialTheme.colorScheme.outline
             ),
