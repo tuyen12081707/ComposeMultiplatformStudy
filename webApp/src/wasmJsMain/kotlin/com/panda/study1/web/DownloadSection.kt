@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private const val BASE = "https://github.com/tuyen12081707/ComposeMultiplatformStudy/releases/download/1.0.0"
+private const val BASE = "https://github.com/tuyen12081707/ComposeMultiplatformStudy/releases/download/1.0.1"
 
 private data class PlatformInfo(
     val icon: String,
