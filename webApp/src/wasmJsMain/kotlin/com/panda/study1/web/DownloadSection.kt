@@ -37,7 +37,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private const val GITHUB_RELEASES = "https://github.com/your-org/xapk-installer/releases/latest"
+private const val BASE = "https://github.com/tuyen12081707/ComposeMultiplatformStudy/releases/download/1.0.0"
 
 private data class PlatformInfo(
     val icon: String,
@@ -51,31 +51,31 @@ private data class PlatformInfo(
 
 private val platforms = listOf(
     PlatformInfo(
-        icon       = "🍎",
-        label      = "macOS",
-        sublabel   = "Apple Silicon & Intel",
-        extension  = ".dmg",
+        icon        = "🍎",
+        label       = "macOS",
+        sublabel    = "Apple Silicon & Intel",
+        extension   = ".dmg",
         accentStart = Color(0xFF6366F1),
         accentEnd   = Color(0xFF8B5CF6),
-        url        = GITHUB_RELEASES
+        url         = "$BASE/XAPK.Installer-1.0.0.dmg"
     ),
     PlatformInfo(
-        icon       = "🪟",
-        label      = "Windows",
-        sublabel   = "Windows 10 / 11",
-        extension  = ".exe",
+        icon        = "🪟",
+        label       = "Windows",
+        sublabel    = "Windows 10 / 11",
+        extension   = ".msi",
         accentStart = Color(0xFF0EA5E9),
         accentEnd   = Color(0xFF22D3EE),
-        url        = GITHUB_RELEASES
+        url         = "$BASE/xapk_installer_window.msi"
     ),
     PlatformInfo(
-        icon       = "🐧",
-        label      = "Ubuntu",
-        sublabel   = "Debian-based distros",
-        extension  = ".deb",
+        icon        = "🐧",
+        label       = "Ubuntu",
+        sublabel    = "Debian-based distros",
+        extension   = ".deb",
         accentStart = Color(0xFFE8541A),
         accentEnd   = Color(0xFFF59E0B),
-        url        = GITHUB_RELEASES
+        url         = "$BASE/xapk_installer_ubutu.deb"
     ),
 )
 
