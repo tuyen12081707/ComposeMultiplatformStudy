@@ -183,8 +183,9 @@ private fun DropZone(
                 if (dragData is DragData.FilesList) {
                     dragData.readFiles().firstOrNull()?.let { fileUri ->
                         runCatching {
-                            // Convert file URI to a native OS path
-                            val path = URI(fileUri).toURL().path
+                            // Paths.get(URI) fully decodes percent-encoding (%20 → space, etc.)
+                            // and returns the correct native path on every OS.
+                            val path = java.nio.file.Paths.get(URI(fileUri)).toString()
                             onDrop(path)
                         }
                     }
