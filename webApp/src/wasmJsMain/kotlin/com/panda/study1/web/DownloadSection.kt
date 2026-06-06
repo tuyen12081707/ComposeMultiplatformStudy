@@ -57,7 +57,7 @@ private val platforms = listOf(
         extension   = ".dmg",
         accentStart = Color(0xFF6366F1),
         accentEnd   = Color(0xFF8B5CF6),
-        url         = "$BASE/XAPK.Installer-1.0.0.dmg"
+        url         = "$BASE/XAPK.Installer-1.0.1.dmg"
     ),
     PlatformInfo(
         icon        = "🪟",
@@ -66,7 +66,7 @@ private val platforms = listOf(
         extension   = ".msi",
         accentStart = Color(0xFF0EA5E9),
         accentEnd   = Color(0xFF22D3EE),
-        url         = "$BASE/xapk_installer_window.uu"
+        url         = "$BASE/xapk_installer_window-1.0.1.uu"
     ),
     PlatformInfo(
         icon        = "🐧",
@@ -75,7 +75,7 @@ private val platforms = listOf(
         extension   = ".deb",
         accentStart = Color(0xFFE8541A),
         accentEnd   = Color(0xFFF59E0B),
-        url         = "$BASE/xapk_installer_ubutu.deb"
+        url         = "$BASE/xapk_installer_ubutu-1.0.1.deb"
     ),
 )
 

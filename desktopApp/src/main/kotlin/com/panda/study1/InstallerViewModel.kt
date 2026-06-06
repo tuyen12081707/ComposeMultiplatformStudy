@@ -44,16 +44,23 @@ class InstallerViewModel(
 
     // Hàm làm sạch đường dẫn, xử lý đặc sản "file://" của macOS
     private fun cleanMacOsPath(rawPath: String): String {
-        var cleanPath = runCatching {
-            URLDecoder.decode(rawPath.trim(), StandardCharsets.UTF_8.name())
-        }.getOrDefault(rawPath.trim())
+        var path = rawPath.trim()
 
-        if (cleanPath.startsWith("file://")) {
-            cleanPath = cleanPath.removePrefix("file://")
-        } else if (cleanPath.startsWith("file:")) {
-            cleanPath = cleanPath.removePrefix("file:")
+        try {
+            // Nếu có prefix file:, dùng URI để tự động decode chuẩn xác 100%
+            if (path.startsWith("file:")) {
+                path = java.net.URI(path).path
+            } else {
+                // Nếu không có, thử dùng URLDecoder
+                path = URLDecoder.decode(path, StandardCharsets.UTF_8.name())
+            }
+        } catch (e: Exception) {
+            // Backup hạng nặng: Nếu URI/URLDecoder bị crash do chuỗi lỗi, tự dọn bằng tay
+            path = path.removePrefix("file://").removePrefix("file:")
+            path = path.replace("%20", " ")
         }
-        return cleanPath
+
+        return path
     }
 
     private suspend fun runInstallPipeline(path: String) {
