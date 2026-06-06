@@ -1,35 +1,40 @@
 package com.panda.study1
 
 import java.io.File
-import java.util.zip.ZipInputStream
+import java.util.zip.ZipFile
 
 /**
  * Extracts a ZIP-based archive (.xapk / .apks) into a unique temporary directory.
- *
- * @param sourceFile  The .xapk or .apks file to extract.
- * @param onProgress  Optional callback invoked with each entry name as it is extracted.
- * @return            The [File] pointing to the created temp directory containing the extracted contents.
- * @throws Exception  If extraction fails for any reason.
+ * Uses ZipFile instead of ZipInputStream to avoid the "only DEFLATED entries can have EXT descriptor" error.
  */
 fun extractXapk(sourceFile: File, onProgress: (entryName: String) -> Unit = {}): File {
     val tmpDir = File(System.getProperty("java.io.tmpdir"), "xapk_installer_${System.currentTimeMillis()}")
     tmpDir.mkdirs()
 
-    ZipInputStream(sourceFile.inputStream().buffered()).use { zis ->
-        var entry = zis.nextEntry
-        while (entry != null) {
+    // Sử dụng ZipFile để đọc cấu trúc chuẩn xác thay vì ZipInputStream
+    ZipFile(sourceFile).use { zip ->
+        val entries = zip.entries()
+        while (entries.hasMoreElements()) {
+            val entry = entries.nextElement()
             val outFile = File(tmpDir, entry.name)
+
+            // Bảo mật: Ngăn chặn lỗi Zip Slip (kẻ xấu nhét đường dẫn ../ để ghi đè file hệ thống)
+            if (!outFile.canonicalPath.startsWith(tmpDir.canonicalPath)) {
+                continue
+            }
+
             if (entry.isDirectory) {
                 outFile.mkdirs()
             } else {
                 outFile.parentFile?.mkdirs()
                 onProgress(entry.name)
-                outFile.outputStream().buffered().use { out ->
-                    zis.copyTo(out)
+
+                zip.getInputStream(entry).use { input ->
+                    outFile.outputStream().buffered().use { output ->
+                        input.copyTo(output)
+                    }
                 }
             }
-            zis.closeEntry()
-            entry = zis.nextEntry
         }
     }
 
