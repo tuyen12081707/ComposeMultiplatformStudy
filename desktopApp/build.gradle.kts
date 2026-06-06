@@ -22,8 +22,18 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.panda.study1"
+
+            // Đây sẽ là tên app hiển thị cho người dùng (Ví dụ: XAPK Installer)
+            packageName = "XAPK Installer"
             packageVersion = "1.0.0"
+
+            // Chỗ này mới là nơi khai báo package name thực sự cho HĐH quản lý
+            macOS {
+                bundleID = "com.panda.study1"
+            }
+            windows {
+                menuGroup = "Panda Tools" // Tạo thư mục trong Start Menu của Win
+            }
         }
     }
 }
