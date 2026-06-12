@@ -47,15 +47,20 @@ class InstallerViewModel(
         var path = rawPath.trim()
 
         try {
-            // Nếu có prefix file:, dùng URI để tự động decode chuẩn xác 100%
+            // 1. Nếu có prefix file:, URI sẽ xử lý hoàn hảo mọi ký tự (%20, dấu + giữ nguyên)
             if (path.startsWith("file:")) {
-                path = java.net.URI(path).path
-            } else {
-                // Nếu không có, thử dùng URLDecoder
-                path = URLDecoder.decode(path, StandardCharsets.UTF_8.name())
+                return java.net.URI(path).path
             }
+
+            // 2. Nếu chuỗi có chứa % (tức là có dấu hiệu bị encode) thì mới dùng URLDecoder
+            if (path.contains("%")) {
+                // Fix lỗi dấu + bị biến thành khoảng trắng của URLDecoder
+                val pathWithSafePlus = path.replace("+", "%2B")
+                return URLDecoder.decode(pathWithSafePlus, StandardCharsets.UTF_8.name())
+            }
+
         } catch (e: Exception) {
-            // Backup hạng nặng: Nếu URI/URLDecoder bị crash do chuỗi lỗi, tự dọn bằng tay
+            // Backup hạng nặng
             path = path.removePrefix("file://").removePrefix("file:")
             path = path.replace("%20", " ")
         }

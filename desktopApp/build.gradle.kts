@@ -14,6 +14,9 @@ dependencies {
     implementation(libs.kotlinx.coroutinesSwing)
 
     implementation(libs.compose.uiToolingPreview)
+
+    // Bác dán thư viện Apache Commons Compress vào ngay đây nhé:
+    implementation("org.apache.commons:commons-compress:1.26.1")
 }
 
 compose.desktop {
@@ -25,7 +28,7 @@ compose.desktop {
 
             // Đây sẽ là tên app hiển thị cho người dùng (Ví dụ: XAPK Installer)
             packageName = "XAPK Installer"
-            packageVersion = "1.0.3"
+            packageVersion = "1.0.5"
 
             // Chỗ này mới là nơi khai báo package name thực sự cho HĐH quản lý
             macOS {

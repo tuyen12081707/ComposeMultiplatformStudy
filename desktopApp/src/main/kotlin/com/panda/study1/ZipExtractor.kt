@@ -1,24 +1,24 @@
 package com.panda.study1
 
+import org.apache.commons.compress.archivers.zip.ZipFile
 import java.io.File
-import java.util.zip.ZipFile
 
 /**
  * Extracts a ZIP-based archive (.xapk / .apks) into a unique temporary directory.
- * Uses ZipFile instead of ZipInputStream to avoid the "only DEFLATED entries can have EXT descriptor" error.
+ * Uses Apache Commons Compress to bypass Android's invalid "DEFLATED EXT descriptor" zipalign quirks.
  */
 fun extractXapk(sourceFile: File, onProgress: (entryName: String) -> Unit = {}): File {
     val tmpDir = File(System.getProperty("java.io.tmpdir"), "xapk_installer_${System.currentTimeMillis()}")
     tmpDir.mkdirs()
 
-    // Sử dụng ZipFile để đọc cấu trúc chuẩn xác thay vì ZipInputStream
-    ZipFile(sourceFile).use { zip ->
-        val entries = zip.entries()
+    // Khởi tạo ZipFile của Apache (phiên bản 1.26+ xài builder)
+    ZipFile.builder().setFile(sourceFile).get().use { zip ->
+        val entries = zip.entries
         while (entries.hasMoreElements()) {
             val entry = entries.nextElement()
             val outFile = File(tmpDir, entry.name)
 
-            // Bảo mật: Ngăn chặn lỗi Zip Slip (kẻ xấu nhét đường dẫn ../ để ghi đè file hệ thống)
+            // Bảo mật: Ngăn chặn lỗi Zip Slip
             if (!outFile.canonicalPath.startsWith(tmpDir.canonicalPath)) {
                 continue
             }
